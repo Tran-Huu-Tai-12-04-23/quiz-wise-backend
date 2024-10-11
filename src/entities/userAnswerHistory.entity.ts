@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntityCustom } from './base.entity';
 
 @Entity(`UserAnswerHistory`)
-export class AnswerHistory extends BaseEntityCustom {
+export class UserAnswerHistoryEntity extends BaseEntityCustom {
   @Column({ length: 500 })
   name: string;
 

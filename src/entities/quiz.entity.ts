@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntityCustom } from './base.entity';
-import { Question } from './question.entity';
+import { QuestionEntity } from './question.entity';
 @Entity(`Quizzes`)
-export class Quiz extends BaseEntityCustom {
+export class QuizEntity extends BaseEntityCustom {
   @Column({ length: 500 })
   name: string;
 
@@ -12,6 +12,6 @@ export class Quiz extends BaseEntityCustom {
   @Column()
   avatar: string;
 
-  @OneToMany(() => Question, (ques) => ques.quiz)
-  questions: Promise<Question[]>;
+  @OneToMany(() => QuestionEntity, (ques) => ques.quiz)
+  questions: Promise<QuestionEntity[]>;
 }

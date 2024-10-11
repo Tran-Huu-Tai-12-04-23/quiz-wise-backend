@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntityCustom } from './base.entity';
-import { Quiz } from './quiz.entity';
+import { QuizEntity } from './quiz.entity';
 @Entity(`Questions`)
-export class Question extends BaseEntityCustom {
+export class QuestionEntity extends BaseEntityCustom {
   @Column({ length: 500 })
   title: string;
 
@@ -14,7 +14,7 @@ export class Question extends BaseEntityCustom {
 
   @Column()
   quizId: string;
-  @ManyToOne(() => Quiz, (quiz) => quiz.questions)
+  @ManyToOne(() => QuizEntity, (quiz) => quiz.questions)
   @JoinColumn({ name: 'quizId', referencedColumnName: 'id' })
-  quiz: Quiz;
+  quiz: QuizEntity;
 }
