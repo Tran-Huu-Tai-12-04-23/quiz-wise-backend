@@ -1,6 +1,6 @@
-import { QuestionEntity } from 'src/entities/question.entity';
+import { QuizEntity } from 'src/entities/quiz.entity';
 import { CustomRepository } from 'src/typeorm/typeorm-decorater';
 import { Repository } from 'typeorm';
 
-@CustomRepository(QuestionEntity)
-export class QuizRepository extends Repository<QuestionEntity> {}
+@CustomRepository(QuizEntity)
+export class QuizRepository extends Repository<QuizEntity> {}
