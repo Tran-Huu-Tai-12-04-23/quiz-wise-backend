@@ -94,14 +94,13 @@ export class AppService {
       );
 
       // Fetch data from all pages concurrently
-      for (let i = firstPage; i <= lastPage; i++) {
+      for (let i = firstPage; i <= 1; i++) {
         const pageData = await this.fetchPageData(`${url}${i}`);
         lstCompanyData.push(...pageData);
 
         await setTimeout(() => {
           console.log(`fetching page ${i}`);
         }, 1000);
-
       }
 
       return lstCompanyData;
