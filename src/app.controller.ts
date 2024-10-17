@@ -1,6 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  ApiOperation,
+  ApiProperty,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { AppService } from './app.service';
+export class CrawlerDTO {
+  @ApiProperty({ description: 'majorCode' })
+  @IsNotEmpty()
+  @IsString()
+  majorCode: string;
+}
 
 @ApiTags('')
 @Controller()
@@ -25,5 +37,10 @@ export class AppController {
   @Get('timeout')
   async checkTimeOut() {
     return await this.service.delay(10 * 60 * 1000);
+  }
+  @ApiOperation({ summary: 'crawler' })
+  @Post('crawler')
+  async crawler(@Body() data: CrawlerDTO) {
+    return await this.service.crawlerData(data.majorCode);
   }
 }
