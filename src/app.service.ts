@@ -158,7 +158,9 @@ export class AppService {
         .find('.pc_display')
         .find('.clearfix');
 
-      companyInfo.taxCode = dataDetail(detailTree[detailTree.length - 3])
+      companyInfo.taxCode = dataDetail(
+        detailTree.find('fa.fa-solid.fa-barcode.pe-1').parent().parent(),
+      )
         .find('.div_77')
         .text()
         .trim();
