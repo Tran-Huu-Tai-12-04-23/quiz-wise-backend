@@ -94,13 +94,10 @@ export class AppService {
       );
 
       // Fetch data from all pages concurrently
-      for (let i = firstPage; i <= lastPage; i++) {
+      for (let i = firstPage; i <= lastPage / 2; i++) {
         const pageData = await this.fetchPageData(`${url}${i}`);
         lstCompanyData.push(...pageData);
-
-        await setTimeout(() => {
-          console.log(`fetching page ${i}`);
-        }, 1000);
+        console.log(`fetching page ${i}`);
       }
 
       return lstCompanyData;
@@ -116,8 +113,6 @@ export class AppService {
     try {
       const { data } = await axios.get(pageUrl);
       const $ = cheerio.load(data);
-
-      console.log($(`.text-capitalize`).length);
 
       const detailPromises = $('.div_list_cty')
         .find(`.text-capitalize`)
@@ -184,6 +179,7 @@ export class AppService {
         .trim()
         .replace('<span class="fw500">', '')
         .replace('</span>', '');
+
       return companyInfo;
     } catch (error) {
       console.error(error);
