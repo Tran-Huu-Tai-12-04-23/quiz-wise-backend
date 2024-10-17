@@ -101,6 +101,7 @@ export class AppService {
         await setTimeout(() => {
           console.log(`fetching page ${i}`);
         }, 1000);
+
       }
 
       return lstCompanyData;
@@ -116,8 +117,6 @@ export class AppService {
     try {
       const { data } = await axios.get(pageUrl);
       const $ = cheerio.load(data);
-
-      console.log($(`.text-capitalize`).length);
 
       const detailPromises = $('.div_list_cty')
         .find(`.text-capitalize`)
@@ -184,6 +183,7 @@ export class AppService {
         .trim()
         .replace('<span class="fw500">', '')
         .replace('</span>', '');
+
       return companyInfo;
     } catch (error) {
       console.error(error);
