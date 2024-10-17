@@ -1,6 +1,14 @@
 import { compare, hash } from 'bcrypt';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToOne } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { BaseEntityCustom } from './base.entity';
+import { LibraryEntity } from './library.entity';
 import { UserDetailEntity } from './userDetail.entity';
 @Entity(`Users`)
 export class UserEntity extends BaseEntityCustom {
@@ -37,4 +45,7 @@ export class UserEntity extends BaseEntityCustom {
 
   @OneToOne(() => UserDetailEntity, (userDetail) => userDetail.user)
   userDetail: Promise<UserDetailEntity>;
+
+  @OneToMany(() => LibraryEntity, (lib) => lib.owner)
+  libraries: Promise<LibraryEntity[]>;
 }
