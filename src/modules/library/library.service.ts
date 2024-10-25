@@ -6,11 +6,15 @@ import { QuestionEntity } from 'src/entities/question.entity';
 import { QuizEntity } from 'src/entities/quiz.entity';
 import { UserEntity } from 'src/entities/user.entity';
 import { LibraryRepository } from 'src/repositories/library.repository';
+import { QuizRepository } from 'src/repositories/quiz.repository';
 import { AddQuizToLibraryDTO, LibraryCreateDTO } from './dto/libraryCreate.dto';
 
 @Injectable()
 export class LibraryService {
-  constructor(private readonly repo: LibraryRepository) {}
+  constructor(
+    private readonly repo: LibraryRepository,
+    private readonly quizRepo: QuizRepository,
+  ) {}
 
   async create(user: UserEntity, data: LibraryCreateDTO) {
     return this.repo.manager.transaction(async (manager) => {
@@ -83,6 +87,23 @@ export class LibraryService {
       }
 
       return { message: enumData.message.CREATE_SUCCESS };
+    });
+  }
+  async loadQuizOfLibrary(data: PaginationDto, libId: string) {
+    const lib = await this.repo.findOneBy({ id: libId, isDeleted: false });
+    if (!lib) {
+      throw new Error('Library not found');
+    }
+    return await this.quizRepo.findAndCount({
+      where: {
+        id: libId,
+        isDeleted: false,
+      },
+      skip: data.skip,
+      take: data.take,
+      order: {
+        createdAt: 'DESC',
+      },
     });
   }
 }

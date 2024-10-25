@@ -60,4 +60,16 @@ export class LibraryController {
   async remove(@Param('id') id: string) {
     return await this.service.remove(id);
   }
+
+  @ApiOperation({
+    summary: 'Get all quiz of library pagination',
+  })
+  @ApiResponse({ status: 200 })
+  @Post('quiz-pagination/:id')
+  async loadQuizOfLibrary(
+    @Body() body: PaginationDto,
+    @Param('id') libraryId: string,
+  ) {
+    return await this.service.loadQuizOfLibrary(body, libraryId);
+  }
 }
