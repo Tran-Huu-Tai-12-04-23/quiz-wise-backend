@@ -10,7 +10,7 @@ export class QuestionEntity extends BaseEntityCustom {
   options: string;
 
   @Column()
-  correctAnswerIndex: string;
+  correctAnswerIndex: number;
 
   @Column()
   quizId: string;

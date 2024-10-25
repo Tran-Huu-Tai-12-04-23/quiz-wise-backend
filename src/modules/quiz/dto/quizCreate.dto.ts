@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class QuizCreateDTO {
   @ApiProperty({ description: 'Library id' })
@@ -38,6 +44,6 @@ export class QuestionCreateDTO {
   options: string[];
   @ApiProperty({ description: 'Correct answer index' })
   @IsNotEmpty()
-  @IsString()
-  correctAnswerIndex: string;
+  @IsNumber()
+  correctAnswerIndex: number;
 }

@@ -2,16 +2,16 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   Post,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationDto } from 'src/dto/pagination.dto';
 import { UserEntity } from 'src/entities/user.entity';
 import { CurrentUser } from 'src/helpers/decorators';
 import { JwtAuthGuard } from '../auth/jwt.auth.guard';
-import { LibraryCreateDTO } from './dto/libraryCreate.dto';
+import { AddQuizToLibraryDTO, LibraryCreateDTO } from './dto/libraryCreate.dto';
 import { LibraryService } from './library.service';
 
 @ApiTags('library')
@@ -36,11 +36,22 @@ export class LibraryController {
     summary: 'Get all libraries for the current user',
   })
   @ApiResponse({ status: 200 })
-  @Get()
-  async findAll(@CurrentUser() user: UserEntity) {
-    return await this.service.findAll(user);
+  @Post('pagination')
+  async findAll(@CurrentUser() user: UserEntity, @Body() body: PaginationDto) {
+    return await this.service.findAll(user, body);
   }
 
+  @ApiOperation({
+    summary: 'Add quiz to lib',
+  })
+  @ApiResponse({ status: 200 })
+  @Post('add-quiz')
+  async addQuiz(
+    @CurrentUser() user: UserEntity,
+    @Body() body: AddQuizToLibraryDTO,
+  ) {
+    return await this.service.addQuiz(user, body);
+  }
   @ApiOperation({
     summary: 'Delete a library by ID',
   })
